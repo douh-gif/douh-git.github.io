@@ -1,13 +1,158 @@
-cd /mnt/user-data/outputs && python3 - <<'EOF'
-p='plan.html'
-s=open(p,encoding='utf-8').read()
-a=s.index('var B=[[')
-b=s.index('var X=[[')
-new='''var B=[["فول مدمس مع خبز أسمر",340],["بيض مسلوق مع خبز أسمر",290],["أومليت خضار",270],["شوفان بالحليب والموز",320],["زبادي مع فواكه",230],["لبنة وخيار مع خبز بر",260],["شكشوكة",300],["جبن قريش مع طماطم وخبز بر",240],["حمص بالطحينة مع خبز بر",330],["بيض مقلي مع توست أسمر",300],["توست جبن وخيار",250],["كورن فليكس مع حليب",270],["توست بزبدة الفول السوداني وموز",340],["بيض بالطماطم",280],["خبز بر بالزعتر والزيت",290]];
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>خطتي الأسبوعية</title>
+<style>
+:root{--bg:#f3f7f1;--sf:#fff;--tx:#1c2b22;--mu:#5d6f63;--ac:#2f7d4f;--ac2:#e8873a;--ln:#d9e4d9;--on:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a15;--sf:#1b261f;--tx:#e9f1ea;--mu:#9bb0a1;--ac:#5fc088;--ac2:#f0a263;--ln:#2d3d33;--on:#0d1a12;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121a15;--sf:#1b261f;--tx:#e9f1ea;--mu:#9bb0a1;--ac:#5fc088;--ac2:#f0a263;--ln:#2d3d33;--on:#0d1a12;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Cairo","Segoe UI",Tahoma,sans-serif;line-height:1.7;font-size:16px}
+main{max-width:640px;margin:0 auto;padding:16px}
+h1{font-size:1.6rem;margin:8px 0 2px;font-weight:800}
+h2{font-size:1.15rem;margin:22px 0 8px}
+.sub{color:var(--mu);margin:0 0 14px}
+.wk{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+button{font:inherit;cursor:pointer}
+.nav{background:var(--sf);border:1px solid var(--ln);color:var(--tx);border-radius:10px;padding:6px 12px}
+.days{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px}
+.day{flex:0 0 auto;min-width:74px;background:var(--sf);border:1px solid var(--ln);color:var(--tx);border-radius:12px;padding:8px 6px;text-align:center}
+.day small{display:block;color:var(--mu)}
+.day[aria-pressed="true"]{background:var(--ac);color:var(--on);border-color:var(--ac)}
+.day[aria-pressed="true"] small{color:var(--on)}
+.day.today{outline:2px solid var(--ac2);outline-offset:1px}
+.tot{display:flex;gap:10px;margin:14px 0}
+.tot div{flex:1;background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:10px 12px}
+.tot b{display:block;font-size:1.6rem;line-height:1.2}
+.tot span{color:var(--mu);font-size:.9rem}
+.tot .in b{color:var(--ac)}.tot .out b{color:var(--ac2)}
+.row{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:12px 14px;margin-bottom:8px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.row p{margin:0}.row .t{color:var(--mu);font-size:.88rem}
+.k{white-space:nowrap;font-weight:700}
+a.vid{display:inline-block;margin-top:4px;color:var(--ac);font-weight:700;text-decoration:none;border-bottom:1px solid currentColor}
+.rest{background:var(--sf);border:1px dashed var(--ln);border-radius:14px;padding:14px;text-align:center;color:var(--mu)}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px}
+.opt{display:flex;gap:8px;margin:8px 0}
+.opt label{flex:1;border:1px solid var(--ln);border-radius:12px;padding:10px;text-align:center;cursor:pointer}
+.opt input{position:absolute;opacity:0}
+.opt input:checked+span{color:var(--ac);font-weight:800}
+.opt label:has(input:checked){border-color:var(--ac);background:color-mix(in srgb,var(--ac) 10%,transparent)}
+.opt label:has(input:focus-visible){outline:2px solid var(--ac)}
+input[type=text],input[type=tel]{width:100%;font:inherit;padding:10px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--tx)}
+.go{width:100%;margin-top:10px;background:var(--ac);color:var(--on);border:0;border-radius:12px;padding:12px;font-weight:800}
+.msg{color:var(--ac);min-height:1.5em;margin:6px 0 0}
+.note{color:var(--mu);font-size:.85rem;margin-top:8px}
+:focus-visible{outline:2px solid var(--ac2);outline-offset:2px}
+</style>
+</head>
+<body>
+<main>
+<h1>خطتي الأسبوعية 🥗</h1>
+<p class="sub">أكل وسعرات وتمارين كل يوم، والخطة تتغير كل أسبوع.</p>
+
+<div class="wk">
+<button class="nav" id="prev" aria-label="الأسبوع السابق">‹ السابق</button>
+<strong id="wl"></strong>
+<button class="nav" id="next" aria-label="الأسبوع القادم">القادم ›</button>
+</div>
+<div class="days" id="days" role="group" aria-label="أيام الأسبوع"></div>
+
+<div class="tot">
+<div class="in"><b id="tin">0</b><span>سعرة من الأكل</span></div>
+<div class="out"><b id="tout">0</b><span>سعرة تحرقها</span></div>
+</div>
+
+<h2>وجبات اليوم</h2>
+<div id="meals"></div>
+
+<h2>تمارين اليوم</h2>
+<div id="ex"></div>
+
+<h2>طريقة استلام الخطة</h2>
+<div class="card">
+<div class="opt" role="radiogroup" aria-label="طريقة الاستلام">
+<label><input type="radio" name="m" value="paper"><span>📄 ملف ورقي لباب البيت</span></label>
+<label><input type="radio" name="m" value="digital"><span>📱 ملف إلكتروني على الجوال</span></label>
+</div>
+<div id="addr"><input type="text" id="ad" placeholder="العنوان" aria-label="العنوان"><input type="tel" id="ph" inputmode="tel" placeholder="رقم الجوال" aria-label="رقم الجوال" style="margin-top:8px"></div>
+<button class="go" id="send">مشاركة خطة اليوم</button>
+<div id="sh" style="display:none;margin-top:10px">
+<textarea id="pv" readonly rows="7" style="width:100%;font:inherit;font-size:.9rem;padding:10px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--tx)" aria-label="نص الخطة"></textarea>
+<div style="display:flex;gap:8px;margin-top:8px">
+<a id="wa" class="go" style="flex:1;margin:0;text-align:center;text-decoration:none" href="#" target="_blank" rel="noopener">إرسال بالواتساب</a>
+<button class="go" id="cp" style="flex:1;margin:0">نسخ الخطة</button>
+</div>
+</div>
+<p class="msg" id="msg" role="status"></p>
+<p class="note">اختيارك يُحفظ على جوالك. الملف الإلكتروني فيه كل التمارين مع روابط الفيديو، والأكل مع سعراته.</p>
+</div>
+</main>
+<script>
+var D=["السبت","الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة"];
+var B=[["فول مدمس مع خبز أسمر",340],["بيض مسلوق مع خبز أسمر",290],["أومليت خضار",270],["شوفان بالحليب والموز",320],["زبادي مع فواكه",230],["لبنة وخيار مع خبز بر",260],["شكشوكة",300],["جبن قريش مع طماطم وخبز بر",240],["حمص بالطحينة مع خبز بر",330],["بيض مقلي مع توست أسمر",300],["توست جبن وخيار",250],["كورن فليكس مع حليب",270],["توست بزبدة الفول السوداني وموز",340],["بيض بالطماطم",280],["خبز بر بالزعتر والزيت",290]];
 var L=[["صدر دجاج مشوي مع أرز وسلطة",520],["سمك مشوي مع خضار",450],["عدس بالخضار مع سلطة",420],["ستيك لحم مع بطاطا مشوية",560],["تونة مع سلطة وخبز بر",430],["مجبوس دجاج مع سلطة",600],["كباب مشوي مع سلطة وخبز",530],["مكرونة بالدجاج وصلصة الطماطم",510],["برياني دجاج مع سلطة",620],["روبيان مشوي مع أرز وسلطة",450],["فاصوليا بالطماطم مع أرز",460],["كبسة دجاج مع سلطة",600],["دجاج مشوي مع بطاطا وخضار",500],["كفتة مشوية مع سلطة",520],["دجاج بالفرن مع أرز",540]];
 var N=[["شوربة خضار وتوست",260],["سلطة دجاج",330],["جبن قريش مع خضار",220],["ساندويش تونة",310],["زبادي مع خيار",160],["بيض مسلوق مع سلطة",240],["شوربة عدس",250],["سلطة تونة",290],["ساندويش دجاج",340],["أومليت جبن",280],["حمص بالطحينة مع خضار",280],["سلطة فتوش",200],["ساندويش بيض وجبن",330],["شوربة دجاج",220],["فواكه مع زبادي",220]];
 var S=[["حفنة لوز",160],["تفاحة",95],["موزة",105],["جزر وحمص",120],["برتقالة",80],["تمر حبتين",70],["زبادي سادة",100],["خيار",30],["كوب عنب",100],["جوافة",70],["كوب بطيخ",50],["كوب فراولة",50],["بيضة مسلوقة",75],["مكسرات صغيرة",150],["تمر مع قهوة عربية",80]];
-'''
-open(p,'w',encoding='utf-8').write(s[:a]+new+s[b:])
-EOF
-grep -c "var B=" plan.html
+var X=[["مشي سريع",20,110,"brisk walking workout"],["قفز الحبل",10,120,"jump rope workout beginners"],["سكوات",12,70,"how to do squats"],["ضغط",10,60,"push ups for beginners"],["بلانك",8,40,"plank exercise"],["لانجز",12,75,"lunges exercise"],["جامبينج جاك",10,90,"jumping jacks workout"],["رفع الركبة",10,80,"high knees exercise"],["جسر الحوض",10,55,"glute bridge exercise"],["تمدد وإطالة",10,30,"full body stretching routine"],["جري خفيف",25,230,"jogging for beginners"],["كرانش بطن",10,50,"abs crunches"]];
+var off=0,sel=0,mode="digital";
+function ws(o){var t=new Date();t.setHours(0,0,0,0);var d=(t.getDay()+1)%7;t.setDate(t.getDate()-d+o*7);return t}
+function wk(s){return Math.floor((s.getTime()-s.getTimezoneOffset()*6e4)/6048e5)}
+function pk(p,n){return p[((n%p.length)+p.length)%p.length]}
+function plan(o,d){var s=wk(ws(o)),i=s*7+d;
+var m=[["الفطور",pk(B,i)],["الغداء",pk(L,i*2+3)],["العشاء",pk(N,i*4+7)],["سناك",pk(S,i*7+2)]];
+var e=[];if(d!==6){var k=s*5+d*3;for(var i=0;i<4;i++)e.push(pk(X,k+i*3+(i>1?1:0)))}
+return{m:m,e:e}}
+function sum(a,i){return a.reduce(function(t,x){return t+x[i]},0)}
+function yt(q){return"https://www.youtube.com/results?search_query="+encodeURIComponent(q)}
+function render(){var s=ws(off),end=new Date(s);end.setDate(end.getDate()+6);
+var f=function(x){return x.getDate()+"/"+(x.getMonth()+1)};
+document.getElementById("wl").textContent="أسبوع "+f(s)+" – "+f(end);
+var dh="",td=(new Date().getDay()+1)%7;
+D.forEach(function(n,i){var x=new Date(s);x.setDate(x.getDate()+i);
+var c=plan(off,i),k=sum(c.m.map(function(a){return a[1]}),1);
+dh+='<button class="day'+(off===0&&i===td?" today":"")+'" data-i="'+i+'" aria-pressed="'+(i===sel)+'">'+n+"<small>"+x.getDate()+"/"+(x.getMonth()+1)+"</small><small>"+k+" سعرة</small></button>"});
+var dv=document.getElementById("days");dv.innerHTML=dh;
+var p=plan(off,sel);
+document.getElementById("meals").innerHTML=p.m.map(function(a){return'<div class="row"><div><p>'+a[1][0]+'</p><p class="t">'+a[0]+'</p></div><span class="k">'+a[1][1]+' سعرة</span></div>'}).join("");
+document.getElementById("ex").innerHTML=p.e.length?p.e.map(function(a){return'<div class="row"><div><p>'+a[0]+'</p><p class="t">'+a[1]+' دقيقة</p><a class="vid" href="'+yt(a[3])+'" target="_blank" rel="noopener">▶ شاهد الفيديو</a></div><span class="k">'+a[2]+' سعرة</span></div>'}).join(""):'<div class="rest">يوم راحة 😴 خذ وقتك واشرب ماي كثير</div>';
+document.getElementById("tin").textContent=p.m.reduce(function(t,a){return t+a[1][1]},0);
+document.getElementById("tout").textContent=sum(p.e,2)}
+function text(){var p=plan(off,sel),t="خطة "+D[sel]+"\n\nالأكل:\n";
+p.m.forEach(function(a){t+="- "+a[0]+": "+a[1][0]+" ("+a[1][1]+" سعرة)\n"});
+t+="\nالتمارين:\n";if(!p.e.length)t+="- يوم راحة\n";
+p.e.forEach(function(a){t+="- "+a[0]+" "+a[1]+" دقيقة — "+yt(a[3])+"\n"});
+if(mode==="paper"){var v=document.getElementById("ad").value.trim(),h=document.getElementById("ph").value.trim();t+="\nطلب توصيل ورقي\n"+(v?"العنوان: "+v+"\n":"")+(h?"الجوال: "+h+"\n":"")}
+return t}
+function say(m){document.getElementById("msg").textContent=m}
+function store(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function load(k){try{return localStorage.getItem(k)}catch(e){return null}}
+document.getElementById("days").addEventListener("click",function(e){var b=e.target.closest(".day");if(b){sel=+b.dataset.i;render()}});
+document.getElementById("prev").onclick=function(){off--;render()};
+document.getElementById("next").onclick=function(){off++;render()};
+function setMode(v){mode=v;document.getElementById("addr").style.display=v==="paper"?"block":"none";
+document.querySelectorAll("input[name=m]").forEach(function(r){r.checked=r.value===v})}
+document.querySelectorAll("input[name=m]").forEach(function(r){r.onchange=function(){setMode(r.value);store("mode",r.value);say("")}});
+document.getElementById("ad").oninput=function(e){store("addr",e.target.value)};
+document.getElementById("ph").oninput=function(e){store("phone",e.target.value)};
+function copyTxt(t){var ta=document.getElementById("pv"),ok=false;ta.value=t;ta.focus();ta.select();try{ok=document.execCommand("copy")}catch(e){}
+if(ok){say("تم نسخ الخطة");return}
+if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){say("تم نسخ الخطة")},function(){say("اضغط مطولاً على النص وانسخه")})}
+else say("اضغط مطولاً على النص وانسخه")}
+document.getElementById("send").onclick=function(){var t=text();
+document.getElementById("pv").value=t;document.getElementById("sh").style.display="block";
+document.getElementById("wa").href="https://wa.me/?text="+encodeURIComponent(t);
+say("اختر طريقة الإرسال");
+if(navigator.share){try{navigator.share({title:"خطة "+D[sel],text:t}).catch(function(){})}catch(e){}}};
+document.getElementById("cp").onclick=function(){copyTxt(document.getElementById("pv").value)};
+setMode(load("mode")||"digital");
+var a=load("addr");if(a)document.getElementById("ad").value=a;
+var ph=load("phone");if(ph)document.getElementById("ph").value=ph;
+sel=(new Date().getDay()+1)%7;
+render();
+</script>
+</body>
+</html>
