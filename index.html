@@ -67,6 +67,9 @@ a.vid{display:inline-block;margin-top:4px;color:var(--ac);font-weight:700;text-d
 <h2>تمارين اليوم</h2>
 <div id="ex"></div>
 
+<h2>تمارين الإطالة</h2>
+<div id="st"></div>
+
 </main>
 <script>
 var D=["السبت","الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة"];
@@ -79,6 +82,7 @@ var X=[["تمارين البطن السفلية",10,60,"lower abs workout revers
 ["تمارين الفخذ والساق",15,110,"legs and thighs workout squats reverse lunges sumo squats calf raises glute bridges",[["Squats","squats exercise"],["Reverse Lunges","reverse lunges exercise"],["Sumo Squats","sumo squats exercise"],["Calf Raises","calf raises exercise"],["Glute Bridges","glute bridges exercise"]]],
 ["تمارين الذراع",10,55,"arms workout wall push ups arm circles tricep dips bicep curls",[["Wall Push-ups","wall push ups exercise"],["Arm Circles","arm circles exercise"],["Tricep Dips","tricep dips exercise"],["Bicep Curls","bicep curls exercise"]]]];
 var W=[["إحماء كامل للجسم",5,25,"full body warm up exercises"],["إحماء بتدوير المفاصل",5,20,"joint mobility warm up"],["إحماء حركي قبل التمرين",6,30,"dynamic warm up before workout"],["إحماء للمبتدئين",5,25,"5 minute warm up for beginners"],["إحماء للجزء السفلي من الجسم",5,25,"lower body warm up"],["إحماء للجزء العلوي من الجسم",5,20,"upper body warm up"],["إحماء بالمشي في المكان",5,30,"warm up walking in place"]];
+var T=["تمارين الإطالة",10,30,"full body stretching routine",[["Neck Stretch","neck stretch exercise"],["Shoulder Stretch","shoulder stretch exercise"],["Hamstring Stretch","hamstring stretch exercise"],["Quad Stretch","standing quad stretch"],["Child Pose","child pose stretch"],["Cobra Stretch","cobra stretch exercise"]]];
 var off=0,sel=0;
 function ws(o){var t=new Date();t.setHours(0,0,0,0);var d=(t.getDay()+1)%7;t.setDate(t.getDate()-d+o*7);return t}
 function wk(s){return Math.floor((s.getTime()-s.getTimezoneOffset()*6e4)/6048e5)}
@@ -103,7 +107,8 @@ document.getElementById("ex").innerHTML=p.e.length?p.e.map(function(a){return'<d
 document.getElementById("tin").textContent=p.m.reduce(function(t,a){return t+a[1][1]},0);
 var w=p.w;
 document.getElementById("wu").innerHTML='<div class="row"><div><p>'+w[0]+'</p><p class="t">'+w[1]+' دقيقة</p><a class="vid" href="'+yt(w[3])+'" target="_blank" rel="noopener">▶ شاهد الفيديو</a></div><span class="k">'+w[2]+' سعرة</span></div>';
-document.getElementById("tout").textContent=sum(p.e,2)+w[2]}
+document.getElementById("st").innerHTML='<div class="row"><div><p>'+T[0]+'</p><p class="t">'+T[1]+' دقيقة</p><a class="vid" href="'+yt(T[3])+'" target="_blank" rel="noopener">▶ شاهد المقطع</a><div class="ls" dir="ltr">'+T[4].map(function(x){return'<a href="'+yt(x[1])+'" target="_blank" rel="noopener">'+x[0]+'</a>'}).join("")+'</div></div><span class="k">'+T[2]+' سعرة</span></div>';
+document.getElementById("tout").textContent=sum(p.e,2)+w[2]+T[2]}
 document.getElementById("days").addEventListener("click",function(e){var b=e.target.closest(".day");if(b){sel=+b.dataset.i;render()}});
 document.getElementById("prev").onclick=function(){off--;render()};
 document.getElementById("next").onclick=function(){off++;render()};
