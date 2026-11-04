@@ -36,6 +36,8 @@ button{font:inherit;cursor:pointer}
 a.vid{display:inline-block;margin-top:4px;color:var(--ac);font-weight:700;text-decoration:none;border-bottom:1px solid currentColor}
 .rest{background:var(--sf);border:1px dashed var(--ln);border-radius:14px;padding:14px;text-align:center;color:var(--mu)}
 .card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px}
+.ls{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.ls a{font-size:.85rem;color:var(--tx);border:1px solid var(--ln);border-radius:999px;padding:1px 10px;text-decoration:none}
 :focus-visible{outline:2px solid var(--ac2);outline-offset:2px}
 </style>
 </head>
@@ -72,7 +74,10 @@ var B=[["فول مدمس مع خبز أسمر",340],["بيض مسلوق مع خ�
 var L=[["صدر دجاج مشوي مع أرز وسلطة",520],["سمك مشوي مع خضار",450],["عدس بالخضار مع سلطة",420],["ستيك لحم مع بطاطا مشوية",560],["تونة مع سلطة وخبز بر",430],["مجبوس دجاج مع سلطة",600],["كباب مشوي مع سلطة وخبز",530],["مكرونة بالدجاج وصلصة الطماطم",510],["برياني دجاج مع سلطة",620],["روبيان مشوي مع أرز وسلطة",450],["فاصوليا بالطماطم مع أرز",460],["كبسة دجاج مع سلطة",600],["دجاج مشوي مع بطاطا وخضار",500],["كفتة مشوية مع سلطة",520],["دجاج بالفرن مع أرز",540]];
 var N=[["شوربة خضار وتوست",260],["سلطة دجاج",330],["جبن قريش مع خضار",220],["ساندويش تونة",310],["زبادي مع خيار",160],["بيض مسلوق مع سلطة",240],["شوربة عدس",250],["سلطة تونة",290],["ساندويش دجاج",340],["أومليت جبن",280],["حمص بالطحينة مع خضار",280],["سلطة فتوش",200],["ساندويش بيض وجبن",330],["شوربة دجاج",220],["فواكه مع زبادي",220]];
 var S=[["حفنة لوز",160],["تفاحة",95],["موزة",105],["جزر وحمص",120],["برتقالة",80],["تمر حبتين",70],["زبادي سادة",100],["خيار",30],["كوب عنب",100],["جوافة",70],["كوب بطيخ",50],["كوب فراولة",50],["بيضة مسلوقة",75],["مكسرات صغيرة",150],["تمر مع قهوة عربية",80]];
-var X=[["مشي سريع",20,110,"brisk walking workout"],["قفز الحبل",10,120,"jump rope workout beginners"],["سكوات",12,70,"how to do squats"],["ضغط",10,60,"push ups for beginners"],["بلانك",8,40,"plank exercise"],["لانجز",12,75,"lunges exercise"],["جامبينج جاك",10,90,"jumping jacks workout"],["رفع الركبة",10,80,"high knees exercise"],["جسر الحوض",10,55,"glute bridge exercise"],["تمدد وإطالة",10,30,"full body stretching routine"],["جري خفيف",25,230,"jogging for beginners"],["كرانش بطن",10,50,"abs crunches"]];
+var X=[["تمارين البطن السفلية",10,60,"lower abs workout reverse crunch leg raises mountain climbers dead bug",[["Reverse Crunch","reverse crunch exercise"],["Lying Leg Raises","lying leg raises exercise"],["Mountain Climbers","mountain climbers exercise"],["Dead Bug","dead bug exercise"]]],
+["تمارين عضلات البطن بالكامل",12,70,"full abs workout crunches plank bicycle crunches russian twists",[["Crunches","crunches exercise"],["Plank","plank exercise"],["Bicycle Crunches","bicycle crunches exercise"],["Russian Twists","russian twists exercise"]]],
+["تمارين الفخذ والساق",15,110,"legs and thighs workout squats reverse lunges sumo squats calf raises glute bridges",[["Squats","squats exercise"],["Reverse Lunges","reverse lunges exercise"],["Sumo Squats","sumo squats exercise"],["Calf Raises","calf raises exercise"],["Glute Bridges","glute bridges exercise"]]],
+["تمارين الذراع",10,55,"arms workout wall push ups arm circles tricep dips bicep curls",[["Wall Push-ups","wall push ups exercise"],["Arm Circles","arm circles exercise"],["Tricep Dips","tricep dips exercise"],["Bicep Curls","bicep curls exercise"]]]];
 var W=[["إحماء كامل للجسم",5,25,"full body warm up exercises"],["إحماء بتدوير المفاصل",5,20,"joint mobility warm up"],["إحماء حركي قبل التمرين",6,30,"dynamic warm up before workout"],["إحماء للمبتدئين",5,25,"5 minute warm up for beginners"],["إحماء للجزء السفلي من الجسم",5,25,"lower body warm up"],["إحماء للجزء العلوي من الجسم",5,20,"upper body warm up"],["إحماء بالمشي في المكان",5,30,"warm up walking in place"]];
 var off=0,sel=0;
 function ws(o){var t=new Date();t.setHours(0,0,0,0);var d=(t.getDay()+1)%7;t.setDate(t.getDate()-d+o*7);return t}
@@ -80,7 +85,7 @@ function wk(s){return Math.floor((s.getTime()-s.getTimezoneOffset()*6e4)/6048e5)
 function pk(p,n){return p[((n%p.length)+p.length)%p.length]}
 function plan(o,d){var s=wk(ws(o)),i=s*7+d;
 var m=[["الفطور",pk(B,i)],["الغداء",pk(L,i*2+3)],["العشاء",pk(N,i*4+7)],["سناك",pk(S,i*7+2)]];
-var e=[];if(d!==6){var k=s*5+d*3;for(var i=0;i<4;i++)e.push(pk(X,k+i*3+(i>1?1:0)))}
+var e=d!==6?X:[];
 return{m:m,e:e,w:pk(W,s+d)}}
 function sum(a,i){return a.reduce(function(t,x){return t+x[i]},0)}
 function yt(q){return"https://www.youtube.com/results?search_query="+encodeURIComponent(q)}
@@ -94,7 +99,7 @@ dh+='<button class="day'+(off===0&&i===td?" today":"")+'" data-i="'+i+'" aria-pr
 var dv=document.getElementById("days");dv.innerHTML=dh;
 var p=plan(off,sel);
 document.getElementById("meals").innerHTML=p.m.map(function(a){return'<div class="row"><div><p>'+a[1][0]+'</p><p class="t">'+a[0]+'</p></div><span class="k">'+a[1][1]+' سعرة</span></div>'}).join("");
-document.getElementById("ex").innerHTML=p.e.length?p.e.map(function(a){return'<div class="row"><div><p>'+a[0]+'</p><p class="t">'+a[1]+' دقيقة</p><a class="vid" href="'+yt(a[3])+'" target="_blank" rel="noopener">▶ شاهد الفيديو</a></div><span class="k">'+a[2]+' سعرة</span></div>'}).join(""):'<div class="rest">يوم راحة 😴 خذ وقتك واشرب ماي كثير</div>';
+document.getElementById("ex").innerHTML=p.e.length?p.e.map(function(a){return'<div class="row"><div><p>'+a[0]+'</p><p class="t">'+a[1]+' دقيقة</p><a class="vid" href="'+yt(a[3])+'" target="_blank" rel="noopener">▶ شاهد المقطع</a><div class="ls" dir="ltr">'+a[4].map(function(x){return'<a href="'+yt(x[1])+'" target="_blank" rel="noopener">'+x[0]+'</a>'}).join("")+'</div></div><span class="k">'+a[2]+' سعرة</span></div>'}).join(""):'<div class="rest">يوم راحة 😴 خذ وقتك واشرب ماي كثير</div>';
 document.getElementById("tin").textContent=p.m.reduce(function(t,a){return t+a[1][1]},0);
 var w=p.w;
 document.getElementById("wu").innerHTML='<div class="row"><div><p>'+w[0]+'</p><p class="t">'+w[1]+' دقيقة</p><a class="vid" href="'+yt(w[3])+'" target="_blank" rel="noopener">▶ شاهد الفيديو</a></div><span class="k">'+w[2]+' سعرة</span></div>';
